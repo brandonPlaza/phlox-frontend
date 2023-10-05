@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 
 // Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
@@ -10,24 +10,32 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={GlobalStyleSheet.androidSafeAreaView}>
-            <TextInput
+            {/* <TextInput
                 style={styles.textInput}
                 cursorColor={COLOURS.redpink}
                 onChangeText={onChangeText}
                 value={currLocationSearch}
-            />
+            /> */}
+            <TouchableOpacity
+                style={styles.getRouteButton}
+            >
+                <Text style={styles.getRouteButtonText}>Find your destination</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    textInput: {
+    getRouteButton: {
         backgroundColor: "#E5E5E5",
         marginStart: 10,
         marginEnd: 10,
 
         padding: 5,
 
-        borderRadius: 10
+        borderRadius: 10,
+    },
+    getRouteButtonText:{
+        fontSize:30
     }
 });
