@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 
+import {} from 'feather-icons'
+
 // Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 import { COLOURS } from '../../components/colours';
@@ -36,6 +38,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     getRouteButtonText:{
-        fontSize:30
+        fontSize:30 
     }
 });
