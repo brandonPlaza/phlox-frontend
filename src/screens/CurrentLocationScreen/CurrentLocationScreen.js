@@ -5,10 +5,32 @@ import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput } from 'react
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 import { COLOURS } from '../../components/colours';
 
-export default function CurrentLocationScreen(){
+export default function CurrentLocationScreen({navigation}){
+  const [currLocationSearch, onChangeText] = React.useState('');
   return(
-    <SafeAreaView>
-      <Text>Hello World!</Text>
+    <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
+      <TextInput
+        style={styles.textInput}
+        cursorColor={COLOURS.redpink}
+        onChangeText={onChangeText}
+        value={currLocationSearch}
+      />
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  textInput:{
+    backgroundColor: COLOURS.grey,
+
+    paddingStart: 5,
+    paddingTop: 5,
+    paddingEnd: 5,
+    paddingBottom:5,
+    
+    marginStart:10,
+    marginEnd:10,
+
+    fontSize:25
+  },
+})

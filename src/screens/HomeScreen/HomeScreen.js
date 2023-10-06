@@ -7,7 +7,8 @@ import { ArrowRight } from 'react-native-feather'
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 import { COLOURS } from '../../components/colours';
 
-export default function HomeScreen() {
+
+export default function HomeScreen({navigation}) {
   const [currLocationSearch, onChangeText] = React.useState('');
     return (
       <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
@@ -20,6 +21,7 @@ export default function HomeScreen() {
         <View style={styles.getRouteButtonHeader}>
           <TouchableOpacity
             style={styles.getRouteButton}
+            onPress={() => navigation.navigate('CurrentLocation')}
           >
             <Text style={styles.getRouteButtonText}>Find your destination</Text>
             <ArrowRight stroke={COLOURS.black} width={38} height={38} />
