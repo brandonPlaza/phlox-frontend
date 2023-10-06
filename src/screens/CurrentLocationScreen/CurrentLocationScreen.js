@@ -87,10 +87,13 @@ export default function CurrentLocationScreen({navigation}){
       <SearchBar
         round
         searchIcon={{ size: 24 }}
+        
         onChangeText={(text) => searchFilterFunction(text)}
         onClear={(text) => searchFilterFunction('')}
+
         placeholder="Where are you?..."
         value={search}
+
         containerStyle={styles.searchBoxContainer}
         inputContainerStyle={styles.searchBoxInputContainer}
         inputStyle={styles.searchBoxInput}
