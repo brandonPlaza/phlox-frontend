@@ -7,7 +7,7 @@ import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 import { COLOURS } from '../../components/colours';
 import { color } from 'react-native-elements/dist/helpers';
 
-export default function CurrentLocationScreen({navigation}){
+export default function DestinationLocationScreen({navigation, source}){
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
