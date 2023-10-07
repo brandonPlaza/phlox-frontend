@@ -7,10 +7,12 @@ import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 import { COLOURS } from '../../components/colours';
 import { color } from 'react-native-elements/dist/helpers';
 
-export default function DestinationLocationScreen({navigation, source}){
+export default function DestinationLocationScreen({navigation, route}){
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
+
+  const { source } = route.params;
 
   useEffect(() => {
     //Placeholder text, will be replaced by a call to API for all main nodes and POIs
@@ -86,7 +88,7 @@ export default function DestinationLocationScreen({navigation, source}){
         onChangeText={(text) => searchFilterFunction(text)}
         onClear={(text) => searchFilterFunction('')}
 
-        placeholder="Where are you?..."
+        placeholder={source.title}
         value={search}
 
         containerStyle={styles.searchBoxContainer}

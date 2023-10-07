@@ -51,7 +51,7 @@ export default function CurrentLocationScreen({navigation}){
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+      <Text style={styles.itemStyle} onPress={() => chooseLocation(item)}>
         {item.id}
         {'.'}
         {item.title.toUpperCase()}
@@ -72,9 +72,12 @@ export default function CurrentLocationScreen({navigation}){
     );
   };
 
-  const getItem = (item) => {
+  const chooseLocation = (item) => {
     // Function for click on an item
-    alert('Id : ' + item.id + ' Title : ' + item.title);
+    //alert('Id : ' + item.id + ' Title : ' + item.title);
+    navigation.navigate('DestinationLocation',{
+      source: item
+    })
   };
 
   return(
