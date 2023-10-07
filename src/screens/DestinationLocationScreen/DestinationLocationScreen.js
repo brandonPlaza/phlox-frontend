@@ -88,7 +88,7 @@ export default function DestinationLocationScreen({navigation, route}){
         onChangeText={(text) => searchFilterFunction(text)}
         onClear={(text) => searchFilterFunction('')}
 
-        placeholder={source.title}
+        placeholder="Where are you going?..."
         value={search}
 
         containerStyle={styles.searchBoxContainer}
