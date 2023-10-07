@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import CurrentLocationScreen from './src/screens/CurrentLocationScreen/CurrentLocationScreen';
 import DestinationLocationScreen from './src/screens/DestinationLocationScreen/DestinationLocationScreen';
+import RoutingScreen from './src/screens/RoutingScreen/RoutingScreen';
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,11 @@ export default function App() {
         <Stack.Screen
           name='DestinationLocation'
           component={DestinationLocationScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='Routing'
+          component={RoutingScreen}
           options={{headerShown:false}}
         />
       </Stack.Navigator>

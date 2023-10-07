@@ -53,7 +53,7 @@ export default function DestinationLocationScreen({navigation, route}){
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+      <Text style={styles.itemStyle} onPress={() => sendRouteRequest(item)}>
         {item.id}
         {'.'}
         {item.title.toUpperCase()}
@@ -74,9 +74,12 @@ export default function DestinationLocationScreen({navigation, route}){
     );
   };
 
-  const getItem = (item) => {
+  const sendRouteRequest = (item) => {
     // Function for click on an item
-    alert('Id : ' + item.id + ' Title : ' + item.title);
+    navigation.navigate('Routing',{
+      source: source,
+      dest: item
+    })
   };
 
   return(
