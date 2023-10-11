@@ -29,38 +29,30 @@ const AnalyticsPage = () => {
 
   // 1. Frequency of an accessibility device having an obstruction
   const totalDevices = data.length;
-  const obstructedDevices = data.filter((device) => device.obstructed).length;
-  const obstructionFrequency = (obstructedDevices / totalDevices) * 100;
+  const servicesOutOfService = data.filter(
+    (serv) => serv.isOutOfService
+  ).length;
+  const obstructionFrequency = (servicesOutOfService / totalDevices) * 100;
 
   // 2. Overall Obstruction History Spread
-  const totalObstructions = data.reduce(
-    (acc, device) => acc + device.obstructionHistory.length,
-    0
-  );
-  const obstructionSpread = {};
-  data.forEach((device) => {
-    device.obstructionHistory.forEach((obstruction) => {
-      if (!obstructionSpread[obstruction.type]) {
-        obstructionSpread[obstruction.type] = 0;
+  var elevatorsOutOfService = 0;
+  data.forEach((service) => {
+    if (service.type == "elevator") {
+      if (service.isOutOfService) {
+        elevatorsOutOfService++;
       }
-      obstructionSpread[obstruction.type]++;
-    });
+    }
   });
-  for (let type in obstructionSpread) {
-    obstructionSpread[type] =
-      (obstructionSpread[type] / totalObstructions) * 100;
-  }
 
   // 3. How fast obstructions are resolved
-  const totalResolutionTimes = data.reduce((acc, device) => {
-    return (
-      acc +
-      device.obstructionHistory.reduce((innerAcc, obstruction) => {
-        return innerAcc + (obstruction.resolvedAt - obstruction.reportedAt);
-      }, 0)
-    );
-  }, 0);
-  const averageResolutionTime = totalResolutionTimes / totalObstructions;
+  data.forEach((service) => {
+    service.outOfServiceHistory.forEach((history) => {
+      if (history.isResolved) {
+        const diffTime = Math.abs(history.resolvedTime - service.createdAt);
+        history.resolutionTime = diffHours;
+      }
+    });
+  });
 
   // 4. Amenities that are used a lot
   const amenitiesUsage = {};
