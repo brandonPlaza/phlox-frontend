@@ -15,12 +15,12 @@ export default function DestinationLocationScreen({navigation, route}){
   const { source } = route.params;
 
   useEffect(() => {
-    //Placeholder text, will be replaced by a call to API for all main nodes and POIs
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    fetch('https://phloxapi.azurewebsites.net/api/Routing/GetNodes')
       .then((response) => response.json())
       .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
+        // setFilteredDataSource(responseJson);
+        // setMasterDataSource(responseJson);
+        console.log(responseJson)
       })
       .catch((error) => {
         console.error(error);
@@ -63,7 +63,6 @@ export default function DestinationLocationScreen({navigation, route}){
 
   const ItemSeparatorView = () => {
     return (
-      // Flat List Item Separator
       <View
         style={{
           height: 0.5,
@@ -75,7 +74,6 @@ export default function DestinationLocationScreen({navigation, route}){
   };
 
   const sendRouteRequest = (item) => {
-    // Function for click on an item
     navigation.navigate('Routing',{
       source: source,
       dest: item
