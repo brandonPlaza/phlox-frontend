@@ -13,6 +13,7 @@ export default function RoutingScreen({navigation, route}) {
   const [routeData, setRouteData] = useState([]);
   const [counter, setCounter] = useState(1);
 
+  
   useEffect(() => {
     fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}`, Headers={
       "Content-Type": "application/json",
