@@ -20,6 +20,7 @@ export default function DestinationLocationScreen({navigation, route}){
       .then((responseJson) => {
         var data = []
         responseJson.forEach(element => {
+          var counter = 0
           data.push(element)
         });
         setFilteredDataSource(data);

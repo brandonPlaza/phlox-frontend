@@ -11,6 +11,7 @@ export default function RoutingScreen({navigation, route}) {
   
   // Placeholder to test checking steps of the route
   const [routeData, setRouteData] = useState([]);
+  const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}`, Headers={
@@ -21,7 +22,8 @@ export default function RoutingScreen({navigation, route}) {
       .then((responseJson) => {
         var data = []
         responseJson.forEach(element => {
-          data.push(element)
+          data.push(`${counter}. ${element}`)
+          setCounter(counter+1)
         });
         setRouteData(data)
       })
