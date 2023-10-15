@@ -43,28 +43,25 @@ const AnalyticsPage = () => {
 
   const frequencyOfNodeOutOfService = () => {
     // Get the date for 30 days ago
-    const sevenDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
     let outOfServiceCounts = {};
-    nodeTypes.forEach((type) => {
-      outOfServiceCounts[type] = 0;
-    });
 
     nodes.forEach((node) => {
+      outOfServiceCounts[node.name] = 0; // Initialize count for each node
       node.outOfServiceHistory.forEach((history) => {
         const reportedAt = new Date(history.reportedAt);
-        if (reportedAt >= sevenDaysAgo) {
-          const nodeTypeName = getNodeTypeName(node.nodeType);
-          outOfServiceCounts[nodeTypeName]++;
+        if (reportedAt >= thirtyDaysAgo) {
+          outOfServiceCounts[node.name]++; // Increment count for the specific node
         }
       });
     });
 
     // Format the output
     let result = [];
-    for (let type in outOfServiceCounts) {
-      const count = outOfServiceCounts[type];
-      result.push(`${count} ${type}'s`);
+    for (let nodeName in outOfServiceCounts) {
+      const count = outOfServiceCounts[nodeName];
+      result.push(`${nodeName}: ${count} times`);
     }
 
     return result.join("\n");
@@ -242,8 +239,6 @@ const AnalyticsPage = () => {
   const frequentlyUsedNodes = () => {
     // ... calculate and return frequently used nodes
   };
-
-  const resolutionTimes = averageResolutionTime();
 
   return (
     <SafeAreaView style={styles.container}>
