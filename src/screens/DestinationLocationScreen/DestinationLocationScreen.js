@@ -50,7 +50,7 @@ export default function DestinationLocationScreen({navigation, route}){
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => chooseLocation(item)}>
+      <Text style={styles.itemStyle} onPress={() => sendRouteRequest(item)}>
         {item}
       </Text>
     );

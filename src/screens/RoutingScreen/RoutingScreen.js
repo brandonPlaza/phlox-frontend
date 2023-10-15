@@ -26,7 +26,7 @@ export default function RoutingScreen({navigation, route}) {
         style={styles.itemStyle}
         onPress={() => checkRouteStep(item)}
       >
-        {item.title.toUpperCase()}
+        {item}
       </Text>
     )
   }
