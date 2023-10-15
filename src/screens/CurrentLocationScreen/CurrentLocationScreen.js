@@ -13,12 +13,15 @@ export default function CurrentLocationScreen({navigation}){
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
-    //Placeholder text, will be replaced by a call to API for all main nodes and POIs
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    fetch('https://phloxapi.azurewebsites.net/api/Routing/GetNodes')
       .then((response) => response.json())
       .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
+        var data = []
+        responseJson.forEach(element => {
+          data.push(element)
+        });
+        setFilteredDataSource(data);
+        setMasterDataSource(data);
       })
       .catch((error) => {
         console.error(error);
@@ -26,14 +29,10 @@ export default function CurrentLocationScreen({navigation}){
   }, []);
   
   const searchFilterFunction = (text) => {
-    // Check if searched text is not blank
     if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource
-      // Update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
+        const itemData = item
+          ? item.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -41,8 +40,6 @@ export default function CurrentLocationScreen({navigation}){
       setFilteredDataSource(newData);
       setSearch(text);
     } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
       setFilteredDataSource(masterDataSource);
       setSearch(text);
     }
@@ -52,9 +49,7 @@ export default function CurrentLocationScreen({navigation}){
     return (
       // Flat List Item
       <Text style={styles.itemStyle} onPress={() => chooseLocation(item)}>
-        {item.id}
-        {'.'}
-        {item.title.toUpperCase()}
+        {item}
       </Text>
     );
   };
