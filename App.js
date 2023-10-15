@@ -8,6 +8,7 @@ import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import CurrentLocationScreen from './src/screens/CurrentLocationScreen/CurrentLocationScreen';
 import DestinationLocationScreen from './src/screens/DestinationLocationScreen/DestinationLocationScreen';
 import RoutingScreen from './src/screens/RoutingScreen/RoutingScreen';
+import AnalyticsPage from './src/screens/AnalyticsPage/AnalyticsPage';
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,11 @@ export default function App() {
         <Stack.Screen
           name='Routing'
           component={RoutingScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='AnalyticsPage'
+          component={AnalyticsPage}
           options={{headerShown:false}}
         />
       </Stack.Navigator>
