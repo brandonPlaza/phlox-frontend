@@ -2,35 +2,38 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import axios from "axios";
 
+import data from "./data.json";
+
 const AnalyticsPage = () => {
   const [nodes, setNodes] = useState([]);
   const [reports, setReports] = useState([]);
   const [nodeTypes, setNodeTypes] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.2.212:8081/api/report/getnodes")
-      .then((response) => setNodes(response.data))
-      .catch((error) => {
-        console.error(error);
-        console.log(JSON.stringify(error, null, 2));
-      });
+    // axios
+    //   .get("https://10.0.2.2/api/report/getnodes")
+    //   .then((response) => setNodes(response.data))
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
 
-    axios
-      .get("http://192.168.2.212:8081/api/report/getreports")
-      .then((response) => setReports(response.data))
-      .catch((error) => {
-        console.error(error);
-        console.log(JSON.stringify(error, null, 2));
-      });
+    // axios
+    //   .get("https://10.0.2.2/api/report/getreports")
+    //   .then((response) => setReports(response.data))
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
 
-    axios
-      .get("http://192.168.2.212:8081/api/report/getnodetypes")
-      .then((response) => setNodeTypes(response.data))
-      .catch((error) => {
-        console.error(error);
-        console.log(JSON.stringify(error, null, 2));
-      });
+    // axios
+    //   .get("https://10.0.2.2/api/report/getnodetypes")
+    //   .then((response) => setNodeTypes(response.data))
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+
+    setNodes(data.nodes);
+    setReports(data.reports);
+    setNodeTypes(data.nodeTypes);
   }, []);
 
   const getNodeTypeName = (nodeTypeIndex) => {
@@ -38,8 +41,8 @@ const AnalyticsPage = () => {
   };
 
   const frequencyOfNodeOutOfService = () => {
-    // Get the date for 7 days ago
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    // Get the date for 30 days ago
+    const sevenDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
     let outOfServiceCounts = {};
     nodeTypes.forEach((type) => {
@@ -63,7 +66,7 @@ const AnalyticsPage = () => {
       result.push(`${count} ${type} node(s) marked out of service`);
     }
 
-    return result.join(", ");
+    return result.join(", \n");
   };
 
   const overallObstructionHistorySpread = () => {
@@ -96,7 +99,7 @@ const AnalyticsPage = () => {
       );
     }
 
-    return result.join(", ");
+    return result.join(", \n");
   };
 
   const averageResolutionTime = () => {
@@ -149,25 +152,29 @@ const AnalyticsPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollview}>
         <View style={styles.metricContainer}>
           <Text style={styles.metricTitle}>
-            Frequency of Node Out of Service in the Past 7 Days
+            Frequency of Node Out of Service in the Past 30 Days
           </Text>
-          <Text>{frequencyOfNodeOutOfService()}</Text>
+          <Text style={styles.metricText}>{frequencyOfNodeOutOfService()}</Text>
         </View>
         <View style={styles.metricContainer}>
           <Text style={styles.metricTitle}>
             Overall Obstruction History Spread
           </Text>
-          <Text>{overallObstructionHistorySpread()}</Text>
+          <Text style={styles.metricText}>
+            {overallObstructionHistorySpread()}
+          </Text>
         </View>
         <View style={styles.metricContainer}>
           <Text style={styles.metricTitle}>Average Resolution Time</Text>
-          <Text>Total: {resolutionTimes.totalAverageTime}</Text>
+          <Text style={styles.metricText}>
+            Total: {resolutionTimes.totalAverageTime}
+          </Text>
           {Object.entries(resolutionTimes.individualAverageTimes).map(
             ([nodeName, averageTime]) => (
-              <Text key={nodeName}>
+              <Text key={nodeName} style={styles.metricText}>
                 {nodeName}: {averageTime}
               </Text>
             )
@@ -175,7 +182,7 @@ const AnalyticsPage = () => {
         </View>
         <View style={styles.metricContainer}>
           <Text style={styles.metricTitle}>Frequently Used Nodes</Text>
-          <Text>{frequentlyUsedNodes()}</Text>
+          <Text style={styles.metricText}>{frequentlyUsedNodes()}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -185,14 +192,19 @@ const AnalyticsPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollview: {
     padding: 20,
   },
   metricContainer: {
     marginBottom: 20,
   },
   metricTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
+  },
+  metricText: {
+    fontSize: 16,
   },
   nodeContainer: {
     padding: 10,
