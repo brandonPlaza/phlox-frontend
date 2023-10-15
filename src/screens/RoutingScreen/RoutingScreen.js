@@ -10,7 +10,25 @@ export default function RoutingScreen({navigation, route}) {
   const { source, dest } = route.params;
   
   // Placeholder to test checking steps of the route
-  const [routeData, setRouteData] = useState([source, dest]);
+  const [routeData, setRouteData] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}`, Headers={
+      "Content-Type": "application/json",
+      "Ocp-Apim-Subscription-Key":"f6c04a777c594f13ae4eac6bb3ec31c5"
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        var data = []
+        responseJson.forEach(element => {
+          data.push(element)
+        });
+        setRouteData(data)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const checkRouteStep = (item) => {
     // var firstItem = data.find(x => x != undefined)
