@@ -1,14 +1,13 @@
 import React from "react";
 import {
   StyleSheet,
-  Platform,
   Text,
   View,
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
   Button,
 } from "react-native";
+import NavBar from "../../components/NavBar";
 
 import { ArrowRight } from "react-native-feather";
 
@@ -16,14 +15,13 @@ import { ArrowRight } from "react-native-feather";
 import GlobalStyleSheet from "../../components/GlobalStyleSheet";
 import { COLOURS } from "../../components/colours";
 
-
-export default function HomeScreen({navigation}) {
-    return (
-      <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
+export default function HomeScreen({ navigation }) {
+  return (
+    <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
       <View style={styles.getRouteButtonHeader}>
         <TouchableOpacity
           style={styles.getRouteButton}
-          onPress={() => navigation.navigate('CurrentLocation')}
+          onPress={() => navigation.navigate("CurrentLocation")}
         >
           <Text style={styles.getRouteButtonText}>Find your destination</Text>
           <ArrowRight stroke={COLOURS.black} width={38} height={38} />
@@ -39,6 +37,7 @@ export default function HomeScreen({navigation}) {
           onPress={() => navigation.navigate("AnalyticsPage")}
         />
       </View>
+      <NavBar navigation={navigation} />
     </SafeAreaView>
   );
 }

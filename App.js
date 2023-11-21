@@ -1,14 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screen imports
-import HomeScreen from './src/screens/HomeScreen/HomeScreen';
-import CurrentLocationScreen from './src/screens/CurrentLocationScreen/CurrentLocationScreen';
-import DestinationLocationScreen from './src/screens/DestinationLocationScreen/DestinationLocationScreen';
-import RoutingScreen from './src/screens/RoutingScreen/RoutingScreen';
-import AnalyticsPage from './src/screens/AnalyticsPage/AnalyticsPage';
+import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import CurrentLocationScreen from "./src/screens/CurrentLocationScreen/CurrentLocationScreen";
+import DestinationLocationScreen from "./src/screens/DestinationLocationScreen/DestinationLocationScreen";
+import RoutingScreen from "./src/screens/RoutingScreen/RoutingScreen";
+import AnalyticsPage from "./src/screens/AnalyticsPage/AnalyticsPage";
+import ProfilePage from "./src/screens/ProfilePage/ProfilePage";
+import FavouritesPage from "./src/screens/FavouritesPage/FavouritesPage";
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -21,27 +23,37 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{headerShown:false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='CurrentLocation'
+          name="CurrentLocation"
           component={CurrentLocationScreen}
-          options={{headerShown:false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='DestinationLocation'
+          name="DestinationLocation"
           component={DestinationLocationScreen}
-          options={{headerShown:false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='Routing'
+          name="Routing"
           component={RoutingScreen}
-          options={{headerShown:false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='AnalyticsPage'
+          name="AnalyticsPage"
           component={AnalyticsPage}
-          options={{headerShown:false}}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FavouritesPage"
+          component={FavouritesPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProfilePage"
+          component={ProfilePage}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -51,8 +63,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
