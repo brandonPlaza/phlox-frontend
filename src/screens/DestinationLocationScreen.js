@@ -3,8 +3,8 @@ import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, FlatList } f
 import { SearchBar } from 'react-native-elements'
 
 // Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
-import GlobalStyleSheet from '../../components/GlobalStyleSheet';
-import { COLOURS } from '../../components/colours';
+import GlobalStyleSheet from '../components/GlobalStyleSheet';
+import { COLOURS } from '../components/colours';
 import { color } from 'react-native-elements/dist/helpers';
 
 export default function DestinationLocationScreen({navigation, route}){

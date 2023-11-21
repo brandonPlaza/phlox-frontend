@@ -3,8 +3,8 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList} from 'react-native';
 
 // Global Component & Style imports
-import GlobalStyleSheet from '../../components/GlobalStyleSheet';
-import { COLOURS } from '../../components/colours';
+import GlobalStyleSheet from '../components/GlobalStyleSheet';
+import { COLOURS } from '../components/colours';
 
 export default function RoutingScreen({navigation, route}) {
   const { source, dest } = route.params;

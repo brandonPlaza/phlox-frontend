@@ -4,13 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screen imports
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
-import CurrentLocationScreen from "./src/screens/CurrentLocationScreen/CurrentLocationScreen";
-import DestinationLocationScreen from "./src/screens/DestinationLocationScreen/DestinationLocationScreen";
-import RoutingScreen from "./src/screens/RoutingScreen/RoutingScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import CurrentLocationScreen from "./src/screens/CurrentLocationScreen";
+import DestinationLocationScreen from "./src/screens/DestinationLocationScreen";
+import RoutingScreen from "./src/screens/RoutingScreen";
 import AnalyticsPage from "./src/screens/AnalyticsPage/AnalyticsPage";
-import ProfilePage from "./src/screens/ProfilePage/ProfilePage";
-import FavouritesPage from "./src/screens/FavouritesPage/FavouritesPage";
+import ProfilePage from "./src/screens/ProfilePage";
+import FavouritesPage from "./src/screens/FavouritesPage";
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
