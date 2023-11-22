@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import { ArrowRight, Home, Star, User } from "react-native-feather";
+import { Home, Star, User } from "react-native-feather";
 
-// Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import { COLOURS } from "../components/colours";
 
 export default function NavBar({ navigation }) {
