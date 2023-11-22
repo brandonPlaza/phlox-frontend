@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,9 +14,26 @@ import { Search, Flag } from "react-native-feather";
 // Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import GlobalStyleSheet from "../components/GlobalStyleSheet";
 import { COLOURS } from "../components/colours";
-import OutOfServiceNodes from "../components/OutOfServiceNodes";
+import OutOfServiceNodes from "../components/OutOfServiceNodes/OutOfServiceNodes";
+import ReportModal from "../components/ReportModal";
 
 export default function HomeScreen({ navigation }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [refreshNodes, setRefreshNodes] = useState(false);
+
+  const handleReportPress = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleReportSubmitted = () => {
+    setIsModalVisible(false);
+    setRefreshNodes((prevState) => !prevState); // Toggle state to trigger refresh
+  };
+
   return (
     <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
       <View style={styles.homeContainer}>
@@ -33,13 +50,21 @@ export default function HomeScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <View style={styles.outOfServiceContainer}>
-            <OutOfServiceNodes navigation={navigation} />
+            <OutOfServiceNodes navigation={navigation} refresh={refreshNodes} />
           </View>
         </View>
-        <TouchableOpacity style={styles.makeReportButton}>
+        <TouchableOpacity
+          style={styles.makeReportButton}
+          onPress={handleReportPress}
+        >
           <Text style={styles.makeReportButtonText}>Make Report</Text>
           <Flag stroke={"#000"} width={18} height={18} />
         </TouchableOpacity>
+        <ReportModal
+          isVisible={isModalVisible}
+          onClose={handleCloseModal}
+          onReportSubmitted={handleReportSubmitted}
+        />
       </View>
       <NavBar navigation={navigation} />
     </SafeAreaView>

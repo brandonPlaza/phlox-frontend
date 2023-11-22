@@ -5,15 +5,22 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 
-export default function OutOfServiceNodes({ navigation }) {
+import {
+  frequencyOfNodeOutOfService,
+  averageResolutionTime,
+} from "../../utils/utilFunctions";
+
+export default function OutOfServiceNodes({ navigation, refresh }) {
   const [nodes, setNodes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [expandedNodeId, setExpandedNodeId] = useState(null);
 
   useEffect(() => {
-    fetch(`https://phloxapi.azurewebsites.net/api/Report/GetNodes`)
+    fetch(`https://phloxapi.azurewebsites.net/api/report/getnodes`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -38,26 +45,51 @@ export default function OutOfServiceNodes({ navigation }) {
         setError(error);
         setIsLoading(false);
       });
-  }, []);
+  }, [refresh]);
 
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
+  const renderItem = ({ item }) => {
+    const handlePress = () => {
+      // Toggle expanded node
+      setExpandedNodeId(expandedNodeId === item.id ? null : item.id);
+    };
+
+    const isExpanded = expandedNodeId === item.id;
+
+    return (
       <View>
-        <Text style={styles.itemText}>{item.name}</Text>
-        <Text style={styles.itemReportText}>
-          Reports: {item.reports.length}
-        </Text>
+        <TouchableOpacity style={styles.itemClickable} onPress={handlePress}>
+          <View style={styles.item}>
+            <View>
+              <Text style={styles.itemText}>{item.name}</Text>
+              <Text style={styles.itemReportText}>
+                Reports: {item.reports.length}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.statusCircle,
+                item.isOutOfService ? styles.red : styles.green,
+              ]}
+            />
+          </View>
+          {isExpanded && (
+            <View style={styles.analyticsContainer}>
+              <Text style={styles.analyticsTitle}>Frequency</Text>
+              <Text
+                style={styles.analyticsText}
+              >{`Out of service ${frequencyOfNodeOutOfService(
+                item
+              )} times in the last 30 days`}</Text>
+              <Text style={styles.analyticsTitle}>Average Resolution Time</Text>
+              <Text style={styles.analyticsText}>{`${averageResolutionTime(
+                item
+              )}`}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
-      <View>
-        <View
-          style={[
-            styles.statusCircle,
-            item.isOutOfService ? styles.red : styles.green,
-          ]}
-        />
-      </View>
-    </View>
-  );
+    );
+  };
 
   const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -98,12 +130,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 20, // Adjust the height for the gap size
   },
-  item: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-
+  itemClickable: {
     paddingVertical: 20,
     paddingHorizontal: 15,
 
@@ -111,6 +138,12 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 0.5,
     borderColor: "#000",
+  },
+  item: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   itemText: {
     fontSize: 18,
@@ -125,6 +158,18 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     color: "#444",
     alignItems: "center",
+  },
+  analyticsContainer: {},
+  analyticsTitle: {
+    color: "blue",
+    fontSize: 16,
+    paddingBottom: 5,
+    paddingTop: 20,
+  },
+  analyticsText: {
+    fontSize: 16,
+    fontWeight: "400",
+    color: "#000",
   },
   loaderContainer: {
     flex: 1,
