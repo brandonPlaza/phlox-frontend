@@ -12,7 +12,7 @@ export default function DestinationLocationScreen({navigation, route}){
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
-  const { source } = route.params;
+  const { disability, source } = route.params;
 
   useEffect(() => {
     fetch('https://phloxapi.azurewebsites.net/api/Routing/GetNodes')
@@ -71,6 +71,7 @@ export default function DestinationLocationScreen({navigation, route}){
 
   const sendRouteRequest = (item) => {
     navigation.navigate('Routing',{
+      disability: disability,
       source: source,
       dest: item
     })

@@ -12,7 +12,7 @@ export default function DisabilitySelectScreen({navigation}){
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => {}}>
+      <Text style={styles.itemStyle} onPress={() => chooseDisability(item)}>
         {item}
       </Text>
     );
@@ -28,6 +28,14 @@ export default function DisabilitySelectScreen({navigation}){
         }}
       />
     );
+  };
+
+  const chooseDisability = (item) => {
+    // Function for click on an item
+    //alert('Id : ' + item.id + ' Title : ' + item.title);
+    navigation.navigate('CurrentLocation',{
+      disability: item
+    })
   };
 
   return(
