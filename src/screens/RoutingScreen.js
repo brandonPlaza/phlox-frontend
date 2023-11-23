@@ -12,7 +12,6 @@ export default function RoutingScreen({navigation, route}) {
   // Placeholder to test checking steps of the route
   const [routeData, setRouteData] = useState([]);
 
-  
   useEffect(() => {
     fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}`, Headers={
       "Content-Type": "application/json",
