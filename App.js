@@ -11,6 +11,7 @@ import RoutingScreen from "./src/screens/RoutingScreen";
 import AnalyticsPage from "./src/screens/AnalyticsPage/AnalyticsPage";
 import ProfilePage from "./src/screens/ProfilePage";
 import FavouritesPage from "./src/screens/FavouritesPage";
+import DisabilitySelectScreen from "./src/screens/DisabilitySelectPage/DisabilitySelectPage";
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -53,6 +54,11 @@ export default function App() {
         <Stack.Screen
           name="ProfilePage"
           component={ProfilePage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DisabilitySelect"
+          component={DisabilitySelectScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

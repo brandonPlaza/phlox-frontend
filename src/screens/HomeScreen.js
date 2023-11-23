@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.searchContainer}>
           <TouchableOpacity
             style={styles.getRouteButton}
-            onPress={() => navigation.navigate("CurrentLocation")}
+            onPress={() => navigation.navigate("DisabilitySelect")}
           >
             <Search stroke={"#000"} width={18} height={18} />
             <View>
