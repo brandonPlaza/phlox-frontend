@@ -1,27 +1,39 @@
+// ProfilePage.js
 import React from "react";
 import {
-  StyleSheet,
-  Text,
   View,
-  SafeAreaView,
+  Text,
   TouchableOpacity,
-  Button,
+  SafeAreaView,
+  StyleSheet,
 } from "react-native";
-import NavBar from "../components/NavBar";
 
-import { ArrowRight } from "react-native-feather";
+import { useUser } from "../utils/UserContext";
 
-// Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import GlobalStyleSheet from "../components/GlobalStyleSheet";
-import { COLOURS } from "../components/colours";
+import NavBar from "../components/NavBar";
+import NotLoggedIn from "../components/NotLoggedIn";
 
-export default function FavouritesPage({ navigation }) {
+const FavouritesPage = ({ navigation }) => {
+  const { user, setUser } = useUser();
+
+  if (!user) {
+    return (
+      <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
+        <NotLoggedIn navigation={navigation} />
+        <NavBar navigation={navigation} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
-      <Text>Favourites Page</Text>
+      <Text>These are your favourites, {user.username}</Text>
       <NavBar navigation={navigation} />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+
+export default FavouritesPage;
