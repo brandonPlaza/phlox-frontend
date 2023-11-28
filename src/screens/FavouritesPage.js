@@ -40,9 +40,6 @@ const FavouritesPage = ({ navigation }) => {
         method:"POST"
       }
     )
-    .then((response) => {
-      console.log(response)
-    })
     .catch((error) => {
       console.error(error);
     });
