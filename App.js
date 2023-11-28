@@ -27,6 +27,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="FavouritesPage"
+            component={FavouritesPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Home"
             component={HomeScreen}
             options={{ headerShown: false }}
@@ -51,11 +56,11 @@ export default function App() {
             component={AnalyticsPage}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="FavouritesPage"
             component={FavouritesPage}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="ProfilePage"
             component={ProfilePage}
