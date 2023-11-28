@@ -6,9 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StyleSheet,
-  FlatList,
-  Alert,
-  ActivityIndicator,
+  FlatList
 } from "react-native";
 
 import { useUser } from "../utils/UserContext";
@@ -20,10 +18,9 @@ import NavBar from "../components/NavBar";
 import NotLoggedIn from "../components/NotLoggedIn";
 import { COLOURS } from "../components/colours";
 
-const FavouritesPage = ({ navigation }) => {
+const AddFavouritePage = ({ navigation }) => {
   //const { user, setUser } = useUser("kpanik");
   const [ amenityData, setAmenityData ] = useState();
-  const [isLoading, setIsLoading] = useState(true);
   
   // if (!user) {
   //   return (
@@ -34,31 +31,19 @@ const FavouritesPage = ({ navigation }) => {
   //   );
   // }
 
-  const RemoveAmenity = (name) => {
-    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/RemoveFavouriteAmenity?amenity=${name}&username=kpanik`,
-      {
-        method:"POST"
-      }
-    )
-    .catch((error) => {
-      console.error(error);
-    });
+  const AddAmenityToFavourites = (item)=>{
+    console.log(item.name)
+    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/AddFavouriteAmenity?amenity=${item.name}&username=kpanik`,{method:"POST"})
+      .catch((error) => {
+        console.error(error);
+      });
   }
-
-  const RemoveAmenityAlert = (amenity) => Alert.alert('Delete Favourite Amenity?', `Are you sure you want to delete ${amenity.name} from your favourites?`, [
-    {
-      text: 'Cancel',
-      onPress: () => console.log('Cancel Pressed'),
-      style: 'cancel',
-    },
-    {text: 'Yes', onPress: () => RemoveAmenity(amenity.name)},
-  ]);
-  
 
   const ItemView = ({ item }) => {
     return (
+      // Flat List Item
       <TouchableOpacity
-        onPress={()=>{RemoveAmenityAlert(item)}}
+        onPress={()=>{AddAmenityToFavourites(item)}}
       >
         <Text style={styles.itemStyle}>{item.name}</Text>
       </TouchableOpacity>
@@ -78,7 +63,7 @@ const FavouritesPage = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetch('https://phloxapi.azurewebsites.net/api/Accounts/GetFavouriteAmenities?username=kpanik')
+    fetch('https://phloxapi.azurewebsites.net/api/Accounts/GetAllAmenities')
       .then((response) => response.json())
       .then((responseJson) => {
         var data = []
@@ -86,47 +71,25 @@ const FavouritesPage = ({ navigation }) => {
           data.push(element)
         });
         setAmenityData(data);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-
-  const FavouritesList = () =>{
-    return(
-      <FlatList
-        data={amenityData}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={ItemSeparatorView}
-        renderItem={ItemView}
-        style={{padding:10}}
-      />
-    )
-  }
-  const LoadingScreen = () =>{
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Loading Nodes...</Text>
-      </View>
-    );
-  }
-
   return (
     <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
       <View>
         <View style={styles.favouritesHeader}>
-          <Text style={styles.favouritesHeaderText}>These are your favourites, kpanik</Text>
-          <TouchableOpacity
-            style={styles.favouritesHeaderAddButton}
-            onPress={()=>{navigation.navigate("AddFavouriteScreen")}}
-          >
-            <Plus width={25} height={25} color={"black"}/>
-          </TouchableOpacity>
+          <Text style={styles.favouritesHeaderText}>Here are the current amenities</Text>
         </View>
-        {!isLoading ? FavouritesList() : LoadingScreen()}
+        <FlatList
+          data={amenityData}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={ItemSeparatorView}
+          renderItem={ItemView}
+          style={{padding:10}}
+        />
       </View>
       <NavBar navigation={navigation} />
     </SafeAreaView>
@@ -166,12 +129,7 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:COLOURS.black,
     fontSize:20
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  }
 });
 
-export default FavouritesPage;
+export default AddFavouritePage;
