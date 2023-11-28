@@ -18,7 +18,7 @@ import NavBar from "../components/NavBar";
 import NotLoggedIn from "../components/NotLoggedIn";
 import { COLOURS } from "../components/colours";
 
-const FavouritesPage = ({ navigation }) => {
+const AddFavouritePage = ({ navigation }) => {
   //const { user, setUser } = useUser("kpanik");
   const [ amenityData, setAmenityData ] = useState();
   
@@ -31,12 +31,22 @@ const FavouritesPage = ({ navigation }) => {
   //   );
   // }
 
+  const AddAmenityToFavourites = (item)=>{
+    console.log(item.name)
+    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/AddFavouriteAmenity?amenity=${item.name}&username=kpanik`,{method:"POST"})
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => {}}>
-        {item.name}
-      </Text>
+      <TouchableOpacity
+        onPress={()=>{AddAmenityToFavourites(item)}}
+      >
+        <Text style={styles.itemStyle}>{item.name}</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -53,7 +63,7 @@ const FavouritesPage = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetch('https://phloxapi.azurewebsites.net/api/Accounts/GetFavouriteAmenities?username=kpanik')
+    fetch('https://phloxapi.azurewebsites.net/api/Accounts/GetAllAmenities')
       .then((response) => response.json())
       .then((responseJson) => {
         var data = []
@@ -71,13 +81,7 @@ const FavouritesPage = ({ navigation }) => {
     <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
       <View>
         <View style={styles.favouritesHeader}>
-          <Text style={styles.favouritesHeaderText}>These are your favourites, kpanik</Text>
-          <TouchableOpacity
-            style={styles.favouritesHeaderAddButton}
-            onPress={()=>{navigation.navigate("AddFavouriteScreen")}}
-          >
-            <Plus width={25} height={25} color={"black"}/>
-          </TouchableOpacity>
+          <Text style={styles.favouritesHeaderText}>Here are the current amenities</Text>
         </View>
         <FlatList
           data={amenityData}
@@ -128,4 +132,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FavouritesPage;
+export default AddFavouritePage;

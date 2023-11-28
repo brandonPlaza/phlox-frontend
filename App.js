@@ -14,6 +14,7 @@ import FavouritesPage from "./src/screens/FavouritesPage";
 import LoginUserScreen from "./src/screens/LoginUserScreen";
 import RegisterUserScreen from "./src/screens/RegisterUserScreen";
 import { UserProvider } from "./src/utils/UserContext";
+import AddFavouritePage from "./src/screens/AddFavouritePage";
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -26,11 +27,6 @@ export default function App() {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="FavouritesPage"
-            component={FavouritesPage}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen
             name="Home"
             component={HomeScreen}
@@ -56,11 +52,11 @@ export default function App() {
             component={AnalyticsPage}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="FavouritesPage"
             component={FavouritesPage}
             options={{ headerShown: false }}
-          /> */}
+          />
           <Stack.Screen
             name="ProfilePage"
             component={ProfilePage}
@@ -74,6 +70,11 @@ export default function App() {
           <Stack.Screen
             name="RegisterUserScreen"
             component={RegisterUserScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AddFavouriteScreen"
+            component={AddFavouritePage}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
