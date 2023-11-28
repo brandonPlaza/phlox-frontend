@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StyleSheet,
-  FlatList
+  FlatList,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 
 import { useUser } from "../utils/UserContext";
@@ -21,6 +23,7 @@ import { COLOURS } from "../components/colours";
 const FavouritesPage = ({ navigation }) => {
   //const { user, setUser } = useUser("kpanik");
   const [ amenityData, setAmenityData ] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   
   // if (!user) {
   //   return (
@@ -31,12 +34,25 @@ const FavouritesPage = ({ navigation }) => {
   //   );
   // }
 
+
+
+  const RemoveAmenityAlert = (amenity) => Alert.alert('Delete Favourite Amenity?', `Are you sure you want to delete ${amenity.name} from your favourites?`, [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'Yes', onPress: () => console.log('OK Pressed')},
+  ]);
+  
+
   const ItemView = ({ item }) => {
     return (
-      // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => {}}>
-        {item.name}
-      </Text>
+      <TouchableOpacity
+        onPress={()=>{RemoveAmenityAlert(item)}}
+      >
+        <Text style={styles.itemStyle}>{item.name}</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -61,11 +77,33 @@ const FavouritesPage = ({ navigation }) => {
           data.push(element)
         });
         setAmenityData(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+
+  const FavouritesList = () =>{
+    return(
+      <FlatList
+        data={amenityData}
+        keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={ItemSeparatorView}
+        renderItem={ItemView}
+        style={{padding:10}}
+      />
+    )
+  }
+  const LoadingScreen = () =>{
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading Nodes...</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView]}>
@@ -79,13 +117,7 @@ const FavouritesPage = ({ navigation }) => {
             <Plus width={25} height={25} color={"black"}/>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={amenityData}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
-          renderItem={ItemView}
-          style={{padding:10}}
-        />
+        {!isLoading ? FavouritesList() : LoadingScreen()}
       </View>
       <NavBar navigation={navigation} />
     </SafeAreaView>
@@ -125,7 +157,12 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:COLOURS.black,
     fontSize:20
-  }
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default FavouritesPage;
