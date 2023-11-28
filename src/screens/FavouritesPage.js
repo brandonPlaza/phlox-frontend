@@ -34,7 +34,19 @@ const FavouritesPage = ({ navigation }) => {
   //   );
   // }
 
-
+  const RemoveAmenity = (name) => {
+    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/RemoveFavouriteAmenity?amenity=${name}&username=kpanik`,
+      {
+        method:"POST"
+      }
+    )
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
 
   const RemoveAmenityAlert = (amenity) => Alert.alert('Delete Favourite Amenity?', `Are you sure you want to delete ${amenity.name} from your favourites?`, [
     {
@@ -42,7 +54,7 @@ const FavouritesPage = ({ navigation }) => {
       onPress: () => console.log('Cancel Pressed'),
       style: 'cancel',
     },
-    {text: 'Yes', onPress: () => console.log('OK Pressed')},
+    {text: 'Yes', onPress: () => RemoveAmenity(amenity.name)},
   ]);
   
 
