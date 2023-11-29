@@ -7,10 +7,12 @@ import GlobalStyleSheet from '../components/GlobalStyleSheet';
 import { COLOURS } from '../components/colours';
 import { color } from 'react-native-elements/dist/helpers';
 
-export default function CurrentLocationScreen({navigation}){
+export default function CurrentLocationScreen({navigation, route}){
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
+
+  const { disability } = route.params;
 
   useEffect(() => {
     fetch('https://phloxapi.azurewebsites.net/api/Routing/GetNodes')
@@ -71,6 +73,7 @@ export default function CurrentLocationScreen({navigation}){
     // Function for click on an item
     //alert('Id : ' + item.id + ' Title : ' + item.title);
     navigation.navigate('DestinationLocation',{
+      disability: disability,
       source: item
     })
   };

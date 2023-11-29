@@ -5,14 +5,18 @@ import { SearchBar } from 'react-native-elements'
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
 
 
-export default function DisabilitySelectScreen({navigation}){
+export default function DisabilitySelectScreen({navigation,route}){
 
   const [disabilities, setDisabilities] = useState(["Physical", "Auditory", "Visual", "Cognitive"])
 
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => {}}>
+      <Text style={styles.itemStyle} onPress={() => {
+        navigation.navigate('CurrentLocation',{
+          disability: item
+        })
+      }}>
         {item}
       </Text>
     );

@@ -15,6 +15,7 @@ import LoginUserScreen from "./src/screens/LoginUserScreen";
 import RegisterUserScreen from "./src/screens/RegisterUserScreen";
 import { UserProvider } from "./src/utils/UserContext";
 import AddFavouritePage from "./src/screens/AddFavouritePage";
+import DisabilitySelectScreen from "./src/screens/DisabilitySelectPage/DisabilitySelectPage";
 
 // Stack object to manage the navigation stack
 const Stack = createNativeStackNavigator();
@@ -75,6 +76,11 @@ export default function App() {
           <Stack.Screen
             name="AddFavouriteScreen"
             component={AddFavouritePage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DisabilitySelect"
+            component={DisabilitySelectScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
