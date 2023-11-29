@@ -8,6 +8,7 @@ import {
   Alert,
   SafeAreaView,
   Text,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUser } from "../utils/UserContext";
@@ -19,17 +20,64 @@ import NavBar from "../components/NavBar";
 
 const RegisterUserScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
 
   const emailInputRef = useRef(null);
+  const firstNameInputRef = useRef(null);
+  const lastNameInputRef = useRef(null);
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  const handleLogin = async () => {
-    // Implement Register
-    Alert.alert("TODO", "Register not implemented yet");
+  const handleRegister = async () => {
+    setIsLoading(true);
+    try {
+      // Make the API request
+      const response = await fetch(
+        "https://phloxapi.azurewebsites.net/api/Accounts/Register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            firstName,
+            lastName,
+            username,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      // Check if the registration was successful
+      if (response.ok) {
+        // Handle successful registration
+        // For example, you can navigate to the login screen or show a success message
+        Alert.alert(
+          "Registration Successful",
+          "Your account has been created."
+        );
+        navigation.navigate("Home");
+      } else {
+        // Handle errors, e.g., user already exists, missing fields, etc.
+        Alert.alert(
+          "Registration Failed",
+          data.message ||
+            "An error occurred during registration. Please try again."
+        );
+      }
+    } catch (error) {
+      // Handle network errors
+      Alert.alert("Error", "An error occurred. Please try again later.");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -50,6 +98,36 @@ const RegisterUserScreen = ({ navigation }) => {
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.inputContainer}
+          onPress={() =>
+            firstNameInputRef.current && firstNameInputRef.current.focus()
+          }
+        >
+          <User width={20} height={20} color={"black"} />
+          <TextInput
+            ref={emailInputRef}
+            style={styles.input}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.inputContainer}
+          onPress={() =>
+            lastNameInputRef.current && lastNameInputRef.current.focus()
+          }
+        >
+          <User width={20} height={20} color={"black"} />
+          <TextInput
+            ref={lastNameInputRef}
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -83,10 +161,22 @@ const RegisterUserScreen = ({ navigation }) => {
             secureTextEntry
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.submitBtn} onPress={handleLogin}>
-          <Text style={styles.submitBtnText}>Register</Text>
+        <TouchableOpacity
+          style={isLoading ? styles.submitBtnDisabled : styles.submitBtn}
+          onPress={handleRegister}
+          disabled={isLoading} // Disable the button when loading
+        >
+          {isLoading ? (
+            <ActivityIndicator
+              style={styles.submitBtnText}
+              size={24}
+              color="#AAA"
+            />
+          ) : (
+            <Text style={styles.submitBtnText}>Register</Text>
+          )}
         </TouchableOpacity>
-        <View style={styles.loginBtnContainer}>
+        <View style={styles.registerBtnContainer}>
           <Button
             title="Already have an account? Login"
             onPress={() => navigation.navigate("LoginUserScreen")}
@@ -141,7 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    paddingVertical: 15,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     marginTop: 20,
     borderRadius: 5,
@@ -149,13 +239,26 @@ const styles = StyleSheet.create({
     borderColor: "#000",
   },
 
+  submitBtnDisabled: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#AAA",
+  },
+
   submitBtnText: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#000",
   },
 
-  loginBtnContainer: {
+  registerBtnContainer: {
     marginTop: 20,
   },
 });
