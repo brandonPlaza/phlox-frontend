@@ -7,7 +7,7 @@ import GlobalStyleSheet from '../components/GlobalStyleSheet';
 import { COLOURS } from '../components/colours';
 
 export default function RoutingScreen({navigation, route}) {
-  const { source, dest } = route.params;
+  const { disability, source, dest } = route.params;
   
   // Placeholder to test checking steps of the route
   const [routeData, setRouteData] = useState([]);
@@ -15,7 +15,7 @@ export default function RoutingScreen({navigation, route}) {
 
   
   useEffect(() => {
-    fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}`, Headers={
+    fetch(`https://phloxapi.azurewebsites.net/api/Routing/GetRoute?source=${source}&dest=${dest}&disability=${disability}`, Headers={
       "Content-Type": "application/json",
       "Ocp-Apim-Subscription-Key":"f6c04a777c594f13ae4eac6bb3ec31c5"
     })
@@ -23,8 +23,7 @@ export default function RoutingScreen({navigation, route}) {
       .then((responseJson) => {
         var data = []
         responseJson.forEach(element => {
-          data.push(`${counter}. ${element}`)
-          setCounter(counter+1)
+          data.push(`${element}`)
         });
         setRouteData(data)
       })
