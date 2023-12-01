@@ -36,7 +36,7 @@ export default function DisabilitySelectScreen({navigation,route}){
 
   return(
     <SafeAreaView style={GlobalStyleSheet.androidSafeAreaView}>
-      <Text>Hello World!</Text>
+      <Text>Please choose a disability</Text>
       <FlatList
         data={disabilities}
         keyExtractor={(item, index) => index.toString()}
