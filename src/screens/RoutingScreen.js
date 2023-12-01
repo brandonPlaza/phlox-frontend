@@ -5,6 +5,8 @@ import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, TouchableOpa
 // Global Component & Style imports
 import GlobalStyleSheet from '../components/GlobalStyleSheet';
 import { COLOURS } from '../components/colours';
+import NavBar from "../components/NavBar";
+
 
 export default function RoutingScreen({navigation, route}) {
   const { disability, source, dest } = route.params;
@@ -72,6 +74,7 @@ export default function RoutingScreen({navigation, route}) {
         ItemSeparatorComponent={itemSeparatorView}
         renderItem={routeListStep}
       />
+      <NavBar navigation={navigation} />
     </SafeAreaView>
   );
 }
