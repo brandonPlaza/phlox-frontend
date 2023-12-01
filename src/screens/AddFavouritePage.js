@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StyleSheet,
-  FlatList
+  FlatList,
+  Alert
 } from "react-native";
 
 import { useUser } from "../utils/UserContext";
@@ -31,9 +32,18 @@ const AddFavouritePage = ({ navigation }) => {
   //   );
   // }
 
+  const AddAmenityAlert = (amenity) => Alert.alert('Add Favourite Amenity?', `Are you sure you want to add ${amenity.name} to your favourites?`, [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'Yes', onPress: () => AddAmenityToFavourites(amenity.name)},
+  ]); 
+
   const AddAmenityToFavourites = (item)=>{
-    console.log(item.name)
-    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/AddFavouriteAmenity?amenity=${item.name}&username=kpanik`,{method:"POST"})
+    console.log(item)
+    fetch(`https://phloxapi.azurewebsites.net/api/Accounts/AddFavouriteAmenity?amenity=${item}&username=kpanik`,{method:"POST"})
       .catch((error) => {
         console.error(error);
       });
@@ -43,7 +53,7 @@ const AddFavouritePage = ({ navigation }) => {
     return (
       // Flat List Item
       <TouchableOpacity
-        onPress={()=>{AddAmenityToFavourites(item)}}
+        onPress={()=>{AddAmenityAlert(item)}}
       >
         <Text style={styles.itemStyle}>{item.name}</Text>
       </TouchableOpacity>
