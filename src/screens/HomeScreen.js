@@ -50,6 +50,19 @@ export default function HomeScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <View style={styles.outOfServiceContainer}>
+            <View style={styles.outOfServiceHeader}>
+              <Text style={styles.outOfServiceTitle}>Amenities</Text>
+              <View>
+                <View style={styles.statusCircleContainer}>
+                  <View style={styles.statusCircleOut}></View>
+                  <Text style={styles.statusCircleOutText}>Out of service</Text>
+                </View>
+                <View style={styles.statusCircleContainer}>
+                  <View style={styles.statusCircleIn}></View>
+                  <Text style={styles.statusCircleInText}>In service</Text>
+                </View>
+              </View>
+            </View>
             <OutOfServiceNodes navigation={navigation} refresh={refreshNodes} />
           </View>
         </View>
@@ -89,8 +102,23 @@ const styles = StyleSheet.create({
   outOfServiceContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     width: "100%",
-    marginTop: 40,
+    marginTop: 30,
+  },
+
+  outOfServiceHeader: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    width: "100%",
+  },
+
+  outOfServiceTitle: {
+    fontWeight: "bold",
+    fontSize: 25,
   },
 
   getRouteButton: {
@@ -108,6 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000",
   },
+
   getRouteButtonText: {
     fontSize: 18,
     fontWeight: "400",
@@ -139,6 +168,50 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontStyle: "normal",
     color: "#000",
+    alignItems: "center",
+  },
+
+  statusCircleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  statusCircleOut: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    marginRight: 5,
+    backgroundColor: "red",
+  },
+
+  statusCircleOutText: {
+    fontSize: 12,
+    fontWeight: "400",
+    fontStyle: "normal",
+    color: "red",
+    alignItems: "center",
+  },
+
+  statusCircleIn: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    marginRight: 5,
+    backgroundColor: "green",
+  },
+
+  statusCircleInText: {
+    fontSize: 12,
+    fontWeight: "400",
+    fontStyle: "normal",
+    color: "green",
     alignItems: "center",
   },
 });

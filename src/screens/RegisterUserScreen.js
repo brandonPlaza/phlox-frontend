@@ -36,7 +36,6 @@ const RegisterUserScreen = ({ navigation }) => {
   const handleRegister = async () => {
     setIsLoading(true);
     try {
-      // Make the API request
       const response = await fetch(
         "https://phloxapi.azurewebsites.net/api/Accounts/Register",
         {
@@ -56,17 +55,16 @@ const RegisterUserScreen = ({ navigation }) => {
 
       const data = await response.json();
 
-      // Check if the registration was successful
       if (response.ok) {
-        // Handle successful registration
-        // For example, you can navigate to the login screen or show a success message
+        setUser(data);
+        await AsyncStorage.setItem("@user", JSON.stringify(data));
+
         Alert.alert(
           "Registration Successful",
           "Your account has been created."
         );
         navigation.navigate("Home");
       } else {
-        // Handle errors, e.g., user already exists, missing fields, etc.
         Alert.alert(
           "Registration Failed",
           data.message ||
@@ -74,7 +72,6 @@ const RegisterUserScreen = ({ navigation }) => {
         );
       }
     } catch (error) {
-      // Handle network errors
       Alert.alert("Error", "An error occurred. Please try again later.");
     }
     setIsLoading(false);
@@ -108,7 +105,7 @@ const RegisterUserScreen = ({ navigation }) => {
         >
           <User width={20} height={20} color={"black"} />
           <TextInput
-            ref={emailInputRef}
+            ref={firstNameInputRef}
             style={styles.input}
             placeholder="First Name"
             value={firstName}
@@ -164,7 +161,7 @@ const RegisterUserScreen = ({ navigation }) => {
         <TouchableOpacity
           style={isLoading ? styles.submitBtnDisabled : styles.submitBtn}
           onPress={handleRegister}
-          disabled={isLoading} // Disable the button when loading
+          disabled={isLoading}
         >
           {isLoading ? (
             <ActivityIndicator

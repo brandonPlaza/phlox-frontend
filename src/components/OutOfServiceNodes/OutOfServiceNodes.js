@@ -12,6 +12,7 @@ import {
   frequencyOfNodeOutOfService,
   averageResolutionTime,
 } from "../../utils/utilFunctions";
+import { GLOBALS } from "../../globals";
 
 export default function OutOfServiceNodes({ navigation, refresh }) {
   const [nodes, setNodes] = useState([]);
@@ -20,7 +21,8 @@ export default function OutOfServiceNodes({ navigation, refresh }) {
   const [expandedNodeId, setExpandedNodeId] = useState(null);
 
   useEffect(() => {
-    fetch(`https://phloxapi.azurewebsites.net/api/report/getnodes`)
+    console.log(`${GLOBALS.BASE_URL + GLOBALS.REPORT + GLOBALS.GETNODES}`);
+    fetch(`${GLOBALS.BASE_URL + GLOBALS.REPORT + GLOBALS.GETNODES}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

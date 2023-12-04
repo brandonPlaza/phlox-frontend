@@ -30,7 +30,6 @@ const LoginUserScreen = ({ navigation }) => {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      // Make the API request
       const response = await fetch(
         "https://phloxapi.azurewebsites.net/api/Accounts/Login",
         {
@@ -47,19 +46,13 @@ const LoginUserScreen = ({ navigation }) => {
 
       const data = await response.json();
 
-      // Check if the login was successful
       if (response.ok) {
-        // Set user data
         setUser(data);
-
-        // Optionally save the user data in AsyncStorage
         await AsyncStorage.setItem("@user", JSON.stringify(data));
 
-        // Navigate to another screen or show a success message
         Alert.alert("Login Successful", "You are now logged in!");
         navigation.navigate("Home");
       } else {
-        // Handle errors, e.g., incorrect credentials
         Alert.alert(
           "Login Failed",
           data.message || "Check your credentials and try again."
@@ -67,7 +60,6 @@ const LoginUserScreen = ({ navigation }) => {
       }
       setIsLoading(false);
     } catch (error) {
-      // Handle network errors
       Alert.alert("Error", "An error occurred. Please try again later.");
       setIsLoading(false);
     }
