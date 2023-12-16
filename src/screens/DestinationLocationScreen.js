@@ -116,5 +116,6 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     padding: 10,
+    fontSize: 20
   },
 })

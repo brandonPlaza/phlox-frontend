@@ -4,6 +4,7 @@ import { SearchBar } from 'react-native-elements'
 
 // Imports the stylesheet that applies global styles for things that should remain consistent like the SafeAreaView fix
 import GlobalStyleSheet from '../components/GlobalStyleSheet';
+import NavBar from "../components/NavBar";
 import { COLOURS } from '../components/colours';
 import { color } from 'react-native-elements/dist/helpers';
 
@@ -100,6 +101,7 @@ export default function CurrentLocationScreen({navigation, route}){
         ItemSeparatorComponent={ItemSeparatorView}
         renderItem={ItemView}
       />
+      <NavBar navigation={navigation} />
     </SafeAreaView>
   )
 }
@@ -117,5 +119,6 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     padding: 10,
+    fontSize: 20
   },
 })

@@ -67,7 +67,8 @@ export default function RoutingScreen({navigation, route}) {
   };
 
   return (
-    <SafeAreaView style={GlobalStyleSheet.androidSafeAreaView}>
+    <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView, styles.viewpadding]}>
+      <Text style={styles.title}>Heres your route!</Text>
       <FlatList
         data={routeData}
         keyExtractor={(item, index) => index.toString()}
@@ -82,5 +83,13 @@ export default function RoutingScreen({navigation, route}) {
 const styles = StyleSheet.create({
   itemStyle: {
     padding: 10,
+    fontSize: 20
   },
+  title:{
+    fontSize:30
+  },
+  viewpadding:{
+    paddingLeft:5,
+    paddingRight:5
+  }
 });

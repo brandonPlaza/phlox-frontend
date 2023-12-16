@@ -3,6 +3,7 @@ import { StyleSheet, Platform, Text, View, SafeAreaView, TextInput, FlatList } f
 import { SearchBar } from 'react-native-elements'
 
 import GlobalStyleSheet from '../../components/GlobalStyleSheet';
+import NavBar from "../../components/NavBar";
 
 
 export default function DisabilitySelectScreen({navigation,route}){
@@ -35,14 +36,15 @@ export default function DisabilitySelectScreen({navigation,route}){
   };
 
   return(
-    <SafeAreaView style={GlobalStyleSheet.androidSafeAreaView}>
-      <Text>Please choose a disability</Text>
+    <SafeAreaView style={[GlobalStyleSheet.androidSafeAreaView, styles.viewpadding]}>
+      <Text style={styles.title}>Please choose a disability</Text>
       <FlatList
         data={disabilities}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={ItemSeparatorView}
         renderItem={ItemView}
       />
+      <NavBar navigation={navigation} />
     </SafeAreaView>
   )
 }
@@ -50,5 +52,18 @@ export default function DisabilitySelectScreen({navigation,route}){
 const styles = StyleSheet.create({
   itemStyle: {
     padding: 10,
+    fontSize: 20,
+    backgroundColor:"#e6e6e6",
+    borderRadius:15,
+    borderWidth:2,
+    marginBottom:5
   },
+  title:{
+    fontSize:30,
+    marginBottom: 20
+  },
+  viewpadding:{
+    paddingLeft:5,
+    paddingRight:5
+  }
 })
